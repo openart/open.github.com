@@ -239,6 +239,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/03/set-title-hack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Open Art">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/03/set-title-hack/" itemprop="url">修改IOS不能设置title的hack</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-03T14:30:41+08:00">
+                2018-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>苹果的IOS系统下会出现手动设置标题失效的情况</p>
+</blockquote>
+<p>实现思路，在网页加载完成之后手动模拟一次网络请求，设置标题</p>
+<p><strong>使用Jquery、zepto</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 修改页面标题</span><br><span class="line"> * @param &#123;[type]&#125; title [description]</span><br><span class="line"> */</span><br><span class="line">utils.setTitle=function(title)&#123;</span><br><span class="line">    var $body = $(&apos;body&apos;);</span><br><span class="line">    document.title = title;</span><br><span class="line"></span><br><span class="line">    var $iframe = $(&apos;&lt;iframe style=&quot;display:none&quot; src=&quot;https://m.putao.cn/PutaoLife/resources/images/favicon.png&quot;&gt;&lt;/iframe&gt;&apos;);</span><br><span class="line">    $iframe.on(&apos;load&apos;,function() &#123;</span><br><span class="line">      setTimeout(function() &#123;</span><br><span class="line">          $iframe.off(&apos;load&apos;).remove();</span><br><span class="line">      &#125;, 0);</span><br><span class="line">    &#125;).appendTo($body);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>使用原生JS</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">utils.setTitle=function(title)&#123;</span><br><span class="line">	document.title = title;</span><br><span class="line">	var mobile = navigator.userAgent.toLowerCase();</span><br><span class="line">	if (/iphone|ipad|ipod/.test(mobile)) &#123;</span><br><span class="line">        var iframe = document.createElement(&apos;iframe&apos;);</span><br><span class="line">        iframe.style.visibility = &apos;hidden&apos;;</span><br><span class="line">        iframe.setAttribute(&apos;src&apos;, &apos;loading.png&apos;);</span><br><span class="line">        var iframeCallback = function() &#123;</span><br><span class="line">	        setTimeout(function() &#123;</span><br><span class="line">	            iframe.removeEventListener(&apos;load&apos;, iframeCallback);</span><br><span class="line">	            document.body.removeChild(iframe);</span><br><span class="line">	        &#125;, 0);</span><br><span class="line">	    &#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/01/git-basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -870,7 +1019,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
