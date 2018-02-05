@@ -239,6 +239,129 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/scroll-click-stop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Open Art">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/scroll-click-stop/" itemprop="url">修复移动端H5的滚轮滚动的过程中相应单击事件的hack</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T19:36:19+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>实现思路：</p>
+<p>1、定义css的noclick类，移除当前页面中的所有元素点击事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.noclick&#123;</span><br><span class="line">    pointer-events: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2、监听元素的鼠标的滚动事件（事件默认为10s，可以根据需要进行调整），如果在滚动，在添加noclick类，否则移除noclick类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$(&apos;.tablist&apos;).on(&apos;touchmove&apos;,function(event)&#123;</span><br><span class="line">    if(!interval)&#123;</span><br><span class="line">    	interval=setInterval(function()&#123;</span><br><span class="line">    		if(document.documentElement.scrollTop==topValue)&#123;</span><br><span class="line">        		console.log(&apos;停止滚动&apos;);</span><br><span class="line">        		$(&apos;#wrap&apos;).removeClass(&apos;noclick&apos;);</span><br><span class="line">        		clearInterval(interval);</span><br><span class="line">        		interval=null;</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;,10);</span><br><span class="line">    	topValue=document.documentElement.scrollTop;</span><br><span class="line">    	console.log(&apos;正在滚动&apos;);</span><br><span class="line">    	$(&apos;#wrap&apos;).addClass(&apos;noclick&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/mobile-modal-scroll/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -258,7 +381,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/05/mobile-modal-scroll/" itemprop="url">mobile-modal-scroll</a></h1>
+                <a class="post-title-link" href="/2018/02/05/mobile-modal-scroll/" itemprop="url">移动端滚动穿透问题完美解决方案</a></h1>
         
 
         <div class="post-meta">
@@ -1205,7 +1328,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
