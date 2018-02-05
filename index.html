@@ -239,6 +239,192 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/mobile-modal-scroll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Open Art">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/mobile-modal-scroll/" itemprop="url">mobile-modal-scroll</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T19:31:14+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>参考链接地址：<a href="http://note.youdao.com/" target="_blank" rel="noopener">https://uedsky.com/2016-06/mobile-modal-scroll/</a></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>众所周知，移动端当有 fixed 遮罩背景和弹出层时，在屏幕上滑动能够滑动背景下面的内容，这就是臭名昭著的滚动穿透问题</p>
+<p>之前搜索了一圈，找到下面两种方案</p>
+<ol>
+<li>css 之 overflow: hidden</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.modal-open &#123;</span><br><span class="line">  &amp;, body &#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    height: 100%;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>页面弹出层上将 .modal-open 添加到 html 上，禁用 html 和 body 的滚动条<br>但是这个方案有两个缺点：</p>
+<ul>
+<li>由于 html 和 body的滚动条都被禁用，弹出层后页面的滚动位置会丢失，需要用 js 来还原</li>
+<li>页面的背景还是能够有滚的动的效果</li>
+</ul>
+<ol>
+<li>js 之 touchmove + preventDefault</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">modal.addEventListener(&apos;touchmove&apos;, function(e) &#123;</span><br><span class="line">  e.preventDefault();</span><br><span class="line">&#125;, false);</span><br></pre></td></tr></table></figure>
+<p>这样用 js 阻止滚动后看起来效果不错了，但是也有一个缺点：</p>
+<ul>
+<li>弹出层里不能有其它需要滚动的内容（如大段文字需要固定高度，显示滚动条也会被阻止）<br>上面两个方案都有缺点，今天用英文关键字 google 了一下，才发现原来还有更好的方案</li>
+</ul>
+<blockquote>
+<p>解决方案 position: fixed</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body.modal-open &#123;</span><br><span class="line">    position: fixed;</span><br><span class="line">    width: 100%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果只是上面的 css，滚动条的位置同样会丢失<br>所以如果需要保持滚动条的位置需要用 js 保存滚动条位置关闭的时候还原滚动位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  * ModalHelper helpers resolve the modal scrolling issue on mobile devices</span><br><span class="line">  * https://github.com/twbs/bootstrap/issues/15852</span><br><span class="line">  * requires document.scrollingElement polyfill https://uedsky.com/demo/src/polyfills/document.scrollingElement.js</span><br><span class="line">  */</span><br><span class="line">var ModalHelper = (function(bodyCls) &#123;</span><br><span class="line">  var scrollTop;</span><br><span class="line">  return &#123;</span><br><span class="line">    afterOpen: function() &#123;</span><br><span class="line">      scrollTop = document.scrollingElement.scrollTop;</span><br><span class="line">      document.body.classList.add(bodyCls);</span><br><span class="line">      document.body.style.top = -scrollTop + &apos;px&apos;;</span><br><span class="line">    &#125;,</span><br><span class="line">    beforeClose: function() &#123;</span><br><span class="line">      document.body.classList.remove(bodyCls);</span><br><span class="line">      // scrollTop lost after set position:fixed, restore it back.</span><br><span class="line">      document.scrollingElement.scrollTop = scrollTop;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)(&apos;modal-open&apos;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>完整实例代码 <a href="https://uedsky.com/demo/modal-scroll.html" target="_blank" rel="noopener">https://uedsky.com/demo/modal-scroll.html</a></p>
+<p>document.scrollingElement</p>
+</blockquote>
+<p>因为浏览器获取和设置 scrollTop 存在兼容性，为了简化上面的示例，我直接使用了 document.scrollingElement 这个新标准，对于不支持的浏览器我写了个 polyfill document.scrollingElement.js</p>
+<blockquote>
+<p>参考 </p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/twbs/bootstrap/issues/15852" target="_blank" rel="noopener">https://github.com/twbs/bootstrap/issues/15852</a></li>
+<li><a href="https://imququ.com/post/document-scrollingelement-in-chrome.html" target="_blank" rel="noopener">https://imququ.com/post/document-scrollingelement-in-chrome.html</a></li>
+<li><a href="https://github.com/mathiasbynens/document.scrollingElement" target="_blank" rel="noopener">https://github.com/mathiasbynens/document.scrollingElement</a></li>
+<li><a href="https://segmentfault.com/q/1010000002942948" target="_blank" rel="noopener">https://segmentfault.com/q/1010000002942948</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>个人实例代码</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;meta name=&apos;viewport&apos; content=&quot;width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0&quot;&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">	&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">		body&#123; font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;&#125;</span><br><span class="line">		body.modelopen&#123;</span><br><span class="line">			position: fixed;</span><br><span class="line">			width: 100%;</span><br><span class="line">		&#125;</span><br><span class="line">		html&#123;</span><br><span class="line">			height: 1000px;</span><br><span class="line">		&#125;</span><br><span class="line">		a&#123;</span><br><span class="line">			position: relative;</span><br><span class="line">			display: block;</span><br><span class="line">			margin: 0 auto;</span><br><span class="line">			width: 80%;</span><br><span class="line">			background: #ab2b2b;</span><br><span class="line">			font-size: 14px;</span><br><span class="line">			line-height: 30px;</span><br><span class="line">			color: #fff;</span><br><span class="line">			border-radius: 2px;</span><br><span class="line">			text-align: center;</span><br><span class="line">			text-decoration: none;</span><br><span class="line">		&#125;</span><br><span class="line">		a:active&#123;</span><br><span class="line">			background: #ab2b2b !important;</span><br><span class="line">		&#125;</span><br><span class="line">		#btn1&#123;</span><br><span class="line">			top: 50px;</span><br><span class="line">		&#125;</span><br><span class="line">		#btn2&#123;</span><br><span class="line">			top: 500px;</span><br><span class="line">		&#125;</span><br><span class="line">		.model&#123;</span><br><span class="line">			position: fixed;</span><br><span class="line">			top: 0;</span><br><span class="line">			left: 0;</span><br><span class="line">			width: 100%;</span><br><span class="line">			height: 100%;</span><br><span class="line">			background: rgba(0,0,0,.5);</span><br><span class="line">		&#125;</span><br><span class="line">		.model ul&#123;</span><br><span class="line">			position: absolute;</span><br><span class="line">			top: 50%;</span><br><span class="line">			left: 10%;</span><br><span class="line">			right: 10%;</span><br><span class="line">			-webkit-transform: translateY(-50%);</span><br><span class="line">			-webkit-box-sizing: border-box;</span><br><span class="line">			box-sizing: border-box;</span><br><span class="line">			padding: 10px;</span><br><span class="line">			height: 150px;</span><br><span class="line">			background: #fff;</span><br><span class="line">			overflow: auto;</span><br><span class="line">		&#125;</span><br><span class="line">		.model ul li&#123;</span><br><span class="line">			font-size: 14px;</span><br><span class="line">			line-height: 20px;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body style=&quot;top: 0px&quot;&gt;</span><br><span class="line">	&lt;a href=&quot;javascript:void(0)&quot; id=&quot;btn1&quot;&gt;打开弹窗1&lt;/a&gt;</span><br><span class="line">	&lt;a href=&quot;javascript:void(0)&quot; id=&apos;btn2&apos;&gt;打开弹窗2&lt;/a&gt;</span><br><span class="line">	&lt;div class=&quot;model&quot; id=&apos;model&apos; style=&quot;display: none;&quot;&gt;</span><br><span class="line">		&lt;ul&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">			&lt;li&gt;Modal Content&lt;/li&gt;</span><br><span class="line">		&lt;/ul&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">	&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line"></span><br><span class="line">  var ModelHelper = (function(bodyCls) &#123;</span><br><span class="line">    var scrollTop;</span><br><span class="line">    return &#123;</span><br><span class="line">      afterOpen: function() &#123;</span><br><span class="line">        scrollTop = document.scrollingElement.scrollTop;</span><br><span class="line">        document.body.classList.add(bodyCls);</span><br><span class="line">        document.body.style.top = -scrollTop + &apos;px&apos;;</span><br><span class="line">      &#125;,</span><br><span class="line">      beforeClose: function() &#123;</span><br><span class="line">        document.body.classList.remove(bodyCls);</span><br><span class="line">        // scrollTop lost after set position:fixed, restore it back.</span><br><span class="line">        document.scrollingElement.scrollTop = scrollTop;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)(&apos;modelopen&apos;);</span><br><span class="line"></span><br><span class="line">	function openModel()&#123;</span><br><span class="line">		document.getElementById(&apos;model&apos;).style.display=&apos;block&apos;;</span><br><span class="line">		ModelHelper.afterOpen();</span><br><span class="line">	&#125;</span><br><span class="line">	function closeModel()&#123;</span><br><span class="line">		ModelHelper.beforeClose();</span><br><span class="line">		document.getElementById(&apos;model&apos;).style.display=&apos;none&apos;;</span><br><span class="line">	&#125;</span><br><span class="line">	var btns=document.querySelectorAll(&apos;a&apos;);</span><br><span class="line">	btns[0].onclick=openModel;</span><br><span class="line">	btns[1].onclick=openModel;</span><br><span class="line">	document.getElementById(&apos;model&apos;).onclick=closeModel;</span><br><span class="line">	document.querySelector(&apos;.model ul&apos;).onclick=function(e)&#123;</span><br><span class="line">		e.stopPropagation();</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/03/set-title-hack/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1019,7 +1205,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
