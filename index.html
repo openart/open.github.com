@@ -239,6 +239,196 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/repay-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Open Art">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/repay-type/" itemprop="url">等额本金与等额本息的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-03T17:36:40+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/basic/" itemprop="url" rel="index">
+                    <span itemprop="name">basic</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p><strong>等额本息计算公式推导</strong></p>
+</blockquote>
+<p>2017-04-27 23:17 by hduhans, 3387 阅读, 1 评论, 收藏, 编辑<br>　　等额本息、等额本金是两种常见的还款方式，是常见的金融术语，我们购房贷款时也会遇到这两个还款方式的选择。等额本息的每期还款总金额（本金+利息）是固定的，那么这个数值是怎么计算出来的呢？近期业务开发中刚好遇到等额本息的相关需求，整理记录了一下计算公式与推导过程。</p>
+<blockquote>
+<p>一、等额本息每期还款总金额计算公式</p>
+</blockquote>
+<p>　　假设贷款总金额为A，月利率为β，贷款期数为k，每期需还款总金额（本金+利息）为x，则：</p>
+<p>　　第一期还款后，欠款总金额 Q1 = A * (1 + β) - x</p>
+<p>　　第二期还款后，欠款总金额 Q2 = Q1 <em> (1 + β) - x = [A </em> (1 + β) - x] <em> (1 + β) - x = A </em> (1 + β) ^ 2 - [1 + (1 + β)] * x</p>
+<p>　　第三期还款后，欠款总金额 Q3 = Q2 <em> (1 + β) - x = {A </em> (1 + β) ^ 2 - [1 + (1 + β)] <em> x} </em> (1 + β) - x = A <em> (1 + β) ^ 3 - [(1 + β) ^ 2 + (1 + β) + 1] </em> x</p>
+<p>　　由此可得出，第k期还款后，欠款总金额 Qk = Qk-1 <em> (1 + β) - x = … = A </em> (1 + β) ^ k - [(1 + β) ^ (k-1) + (1 + β) ^ (k-2) + … + 1] * x。</p>
+<p>　　我们发现[]内是等比数列，等比数列求和公式是不是又忘记了？我们一起来推导下。设y=1 + β，则Sk = 1 + y + y ^2 + … + y ^ (k-1)，y <em> Sk = y + y ^2 + … + y ^ (k-1) + y ^ k，两公式相差得 y </em> Sk - Sk = y ^ k - 1，从而得出Sk = (y ^ k - 1) / (y -1)。</p>
+<p>　　由此继续 Qk = A <em> (1 + β) ^ k - {[(1 + β) ^ k - 1] / β} </em> x，第k期还款后贷款结束，因此Qk = 0，即 A <em> (1 + β) ^ k - {[(1 + β) ^ k - 1] / β} </em> x = 0，得出等额本息每期还款本息总额 x = A <em> β </em> (1 + β) ^ k / [(1 + β) ^ k - 1]，这便是每期需要还款的总金额。</p>
+<blockquote>
+<p>二、等额本息每期还款本金计算公式</p>
+</blockquote>
+<p>　　等额本息每期还款总金额x公式已经有了，那么每期还款的本金是多少呢？假设第n期还款本金为Pn，则：</p>
+<p>　　第一期需还本金 P1 = x - A * β</p>
+<p>　　第二期需还本金 P2 = x - (A - P1) <em> β = x - {A - [x - A </em> β]} <em> β = x - A </em> β + (x - A <em> β) </em> β = P1 + P1 <em> β = P1 </em> (1 + β)</p>
+<p>　　第三期需还本金 P3 = x - (A - P1 - P2) <em> β = x - {A - P1 - P1 </em> (1 + β)} <em> β = x - A </em> β + P1 <em> β + P1 </em> (1 + β) <em> β = P1 </em> (1 + β) ^ 2</p>
+<p>　　则可以猜测第n期需还本金 Pn = P1 * (1 + β) ^ (n - 1)</p>
+<p>　　下面我们来论证这个公式，假设公式成立，则 P(n + 1) = x - [A - P1 - P2 - … -Pn] <em> β = x - {A - P1 </em> [1 + (1 + β) + … + (1 + β) ^ (n - 1)]} <em> β = x - {A - P1 </em> [(1 + β) ^ n - 1] / β} <em> β = x - A </em> β + P1 <em> [(1 + β) ^ n - 1] = p1 </em> (1 + β) ^ n</p>
+<p>　　由此可以得出，等额本息还款中每期还款本金 Pn = P1 * (1 + β) ^ (n - 1)</p>
+<blockquote>
+<p>三、首期利息与末期本金</p>
+</blockquote>
+<p>1、首期利息</p>
+<p>　　等额本息中，首期还款可能存在不足月的情况，这时候本金可以严格按照上述公式得出，但利息肯定不能按满月算了（每期还款利息是按期数-月为单位的），这时候首期利息得需要按实际使用天数进行特殊计算。</p>
+<p>　　假设第一期还款时实际使用天数为 t，则首期利息 L1 = A <em> β </em> t / 30　　</p>
+<p>　　如何计算首期实际使用天数？</p>
+<p>　　首期实际使用天数计算实性的是“对月对日”，首先找到首期还款日t1对应上一期的还款日t0（若当月t0不存在，则往下延一天，即下月的首日），再比较起息日y和t0的天数差，综合，首期实际使用天数 t = 30 - (y - t0)。</p>
+<p>　　范例：</p>
+<p>　　1) 起息日2018-02-15，首期还款日2018-03-10，则t0为2018-02-10，得出首期实际使用天数 t = 30- (2018-02-15 - 2018-02-10) = 25</p>
+<p>　　2) 起息日2018-03-02，首期还款日2018-03-31，则t0为2018-03-01（对应2018-02-31不存在，则顺延一天），得出首期实际使用天数 t = 30- (2018-03-02 - 2018-03-01) = 29</p>
+<p>2、末期本金</p>
+<p>　　由于每期还款本金是公式计算后取四舍五入的值，存在精度丢失问题，因此末期还款本金金额为 Pk = A - P1 - P2 - … - P(k-1)
+　　
+　　</p>
+<blockquote>
+<p>　　四、总结</p>
+</blockquote>
+<p>　　假设贷款总金额为A，月利率为β，贷款期数为k，每期需还款总金额（本金+利息）为x，第n期需还款本金为Pn，第n期需还利息为Ln，则：</p>
+<p>　　第1至k-1期每期还款本金 Pn (1 &lt;= n &lt; k) = P1 * (1 + β) ^ (n - 1)</p>
+<p>　　第k期还款本金 Pk = A - P1 - P2 - … - P(k-1)</p>
+<p>　　第1期还款利息 L1 = A <em> β </em> t / 30 　　</p>
+<p>　　第2期到k期还款利息 Ln = x - Pn</p>
+<p>　　第1期还款本息总额 w1 = P1 + L1</p>
+<p>　　第2期至k期还款本息总额 wn = x</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/scroll-click-stop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1350,7 +1540,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1361,7 +1551,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
